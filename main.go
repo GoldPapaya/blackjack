@@ -12,31 +12,46 @@ func main() {
 	// validate username
 
 	fmt.Printf("Welcome %v. Please input a number according to the options below:\n", username)
-	startMenu()
+	startScreen()
 
 }
 
-func startMenu() {
-	var startMenuInput uint
+func startScreen() {
+	var startScreenInput uint
 
 	fmt.Println("1 - Play")
 	fmt.Println("2 - Rules")
 	fmt.Println("3 - Balance")
 	fmt.Println("4 - Ledger")
-	fmt.Scan(&startMenuInput)
+	fmt.Scan(&startScreenInput)
 
-	switch startMenuInput {
+	switch startScreenInput {
 	case 1:
 		// play
 		fmt.Println("option 1")
 	case 2:
 		// rules
 		fmt.Println("option 2")
+		rulesScreen()
 	case 3:
 		// balance
 		fmt.Println("option 3")
+		balanceScreen()
 	case 4:
 		// ledger
 		fmt.Println("option 4")
+		ledgerScreen()
 	}
+}
+
+func rulesScreen() {
+	// rules
+}
+
+func balanceScreen() {
+	// balance
+}
+
+func ledgerScreen() {
+	// ledger
 }
