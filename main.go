@@ -7,11 +7,11 @@ import (
 // Card object
 type Card struct {
 	face string
-	value uint
+	value int
 }
 
-func getHandValue(hand []Card) uint {
-	var total uint = 0
+func getHandValue(hand []Card) int {
+	total := 0
 	numberOfAces := 0
 	
 	// Calculate total value without aces, and count the number of aces
