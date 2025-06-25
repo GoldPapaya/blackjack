@@ -159,7 +159,19 @@ func startScreen() {
 }
 
 func rulesScreen() {
-	// rules
+	var test int
+	fmt.Println("******************** RULES ********************")
+	fmt.Println("In Blackjack, you play against a dealer.")
+	fmt.Println("The goal of the game is to build a hand with a total value as close to 21 as possible, without going over.")
+	fmt.Println("The value of a card is its face value, with the exception of face cards which always have a value of 10, and aces whose value can either be 1 or 11.")
+	fmt.Println("First, a player and dealer both draw a card.")
+	fmt.Println("The player and house must then decide whether to 'hit' (draw again) or 'stay' (keep current total).")
+	fmt.Println("The game ends when both the house and player stop drawing cards, or when one party has a total over 21.")
+	fmt.Println("Other rules like the 17 pickup rule for the dealer are not *yet* implemented. This is basic Blackjack for now.")
+	fmt.Println("\n1 - Play")
+	fmt.Println("2 - Exit to menu")
+	fmt.Println("***********************************************")
+	fmt.Scan(&test)
 }
 
 func balanceScreen() {
