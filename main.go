@@ -107,19 +107,13 @@ func main() {
 
 	// game loop
 	for {
-		
+		var gameInput int
 		// TODO testing stuff below, not final
-		var playerCard = Card{face: "King", value: 3}
-		var houseCard = Card{face: "Ace"}
-		var houseCard2 = Card{face: "Ace"}
+		var playerCard = deck[rand.Intn(len(deck))]
+		var houseCard = deck[rand.Intn(len(deck))]
 
-		playerHand := []Card{
-			playerCard,
-		}
-		houseHand := []Card{
-			houseCard,
-			houseCard2,
-		}
+		playerHand := []Card{playerCard}
+		houseHand := []Card{houseCard}
 
 
 		fmt.Println("A new round of Blackjack has started.")
@@ -127,6 +121,7 @@ func main() {
 		fmt.Printf("The house has an %v, %v", houseCard, getHandValue(houseHand))
 		fmt.Println("1 - Hit")
 		fmt.Println("2 - Hold")
+
 	}
 }
 
@@ -159,7 +154,8 @@ func startScreen() {
 }
 
 func rulesScreen() {
-	var test int
+	var menuScreenInput int
+
 	fmt.Println("******************** RULES ********************")
 	fmt.Println("In Blackjack, you play against a dealer.")
 	fmt.Println("The goal of the game is to build a hand with a total value as close to 21 as possible, without going over.")
@@ -171,7 +167,13 @@ func rulesScreen() {
 	fmt.Println("\n1 - Play")
 	fmt.Println("2 - Exit to menu")
 	fmt.Println("***********************************************")
-	fmt.Scan(&test)
+	fmt.Scan(&menuScreenInput)
+
+	if menuScreenInput == 1 {
+		// play
+	} else if menuScreenInput == 2 {
+		startScreen()
+	}
 }
 
 func balanceScreen() {
