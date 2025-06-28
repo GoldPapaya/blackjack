@@ -100,27 +100,32 @@ func main() {
 	fmt.Scan(&username)
 	// validate username
 
-	fmt.Printf("%v", deck[rand.Intn(len(deck))])
-
 	fmt.Printf("Welcome %v. Please input a number according to the options below:\n", username)
 	startScreen()
 
+	playerHand := []Card{}
+	houseHand := []Card{}
+	fmt.Println("A new round of Blackjack has started.")
 	// game loop
 	for {
 		var gameInput int
-		// TODO testing stuff below, not final
+
 		var playerCard = deck[rand.Intn(len(deck))]
 		var houseCard = deck[rand.Intn(len(deck))]
+		playerHand = append(playerHand, playerCard)
+		houseHand = append(houseHand, houseCard)
 
-		playerHand := []Card{playerCard}
-		houseHand := []Card{houseCard}
 
-
-		fmt.Println("A new round of Blackjack has started.")
-		fmt.Printf("You have been dealt an %v, %v", playerCard, getHandValue(playerHand))
-		fmt.Printf("The house has an %v, %v", houseCard, getHandValue(houseHand))
+		fmt.Printf("You have been dealt an %v, %v, %v\n", playerCard, playerHand, getHandValue(playerHand))
+		fmt.Printf("The house has an %v, %v, %v\n", houseCard, houseHand, getHandValue(houseHand))
 		fmt.Println("1 - Hit")
 		fmt.Println("2 - Hold")
+		fmt.Scan(&gameInput)
+		if gameInput == 2 {
+			break
+		} else if gameInput == 1 {
+			continue
+		}
 
 	}
 }
