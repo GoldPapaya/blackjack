@@ -130,43 +130,65 @@ func main() {
 
 
 		fmt.Printf("Your hand: %v, with a total value of %v.\n", playerHand, getHandValue(playerHand))
-		fmt.Printf("The house has an %v (value of %v), and another card face down. %v\n", houseCard1, getHandValue([]Card{houseHand[0]}), houseHand[1])
+		fmt.Printf("The house has an %v (value of %v), and another card face down.\n", houseCard1, getHandValue([]Card{houseHand[0]}))
 
 		playerTurn:
-			for {
-					if getHandValue(playerHand) > 21 {
-						fmt.Println("Your hand went bust!")
-						break
-					}
-
-				fmt.Println("What will you do?")
-				fmt.Println("1 - Hit")
-				fmt.Println("2 - Hold")
-				fmt.Scan(&gameInput)
-				switch gameInput {
-				case 1:
-					// Hit
-					playerHand = append(playerHand, drawCard(deck))
-				case 2:
-					// Stand
-					break playerTurn
-				case 3:
-					// Split
-				case 4:
-					// Double down
-				case 5:
-					// Temp exit
-					break playerTurn
+		for {
+				if getHandValue(playerHand) > 21 {
+					fmt.Println("Your hand went bust!")
+					break
 				}
 
-				fmt.Printf("%v, %v\n", playerHand, getHandValue(playerHand))
+			fmt.Println("What will you do?")
+			fmt.Println("1 - Hit")
+			fmt.Println("2 - Hold")
+			fmt.Scan(&gameInput)
+			switch gameInput {
+			case 1:
+				// Hit
+				playerHand = append(playerHand, drawCard(deck))
+			case 2:
+				// Stand
+				break playerTurn
+			case 3:
+				// Split
+			case 4:
+				// Double down
+			case 5:
+				// Temp exit
+				break playerTurn
 			}
+
+			fmt.Printf("%v, %v\n", playerHand, getHandValue(playerHand))
+		}
 		
+		fmt.Printf("The house reveals their face down card to be a %v.\n", houseHand[1])
 		houseTurn:
-			for {
-				fmt.Printf("The house reveals their face down card to be a %v.\n", )
-				break houseTurn
+		for {
+			if getHandValue(houseHand) > 21 {
+				fmt.Println("The house has gone bust!")
+				break
 			}
+			fmt.Printf("The house hand is: %v, with a total value of %v.\n", houseHand, getHandValue(houseHand))
+			if getHandValue(houseHand) >= 17 {
+				fmt.Printf("The house stands.")
+				if getHandValue(playerHand) > getHandValue(houseHand) {
+					// Player wins
+					fmt.Println("Player wins")
+					break houseTurn
+				} else if getHandValue(playerHand) == getHandValue(houseHand) {
+					// Tie
+					fmt.Println("Tie")
+					break houseTurn
+				} else {
+					// House wins
+					fmt.Println("House wins")
+					break houseTurn
+				}
+			}
+			houseHand = append(houseHand, drawCard(deck))
+			fmt.Printf("The house draws another card. It is a %v.", houseHand[len(houseHand)-1])
+		}
 		// start house turn
 		//fmt.Printf("deck2%v", deck)
 		var gameInputtmp int
