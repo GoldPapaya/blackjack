@@ -126,12 +126,12 @@ func main() {
 		var houseCard2 = drawCard(deck)
 
 		playerHand = append(playerHand, playerCard1, playerCard2)
-		houseHand = append(houseHand, houseCard1)
+		houseHand = append(houseHand, houseCard1, houseCard2)
 
 
 		fmt.Printf("Your hand: %v, with a total value of %v.\n", playerHand, getHandValue(playerHand))
-		fmt.Printf("The house has an %v (value of %v), and another card face down. %v\n", houseCard1, getHandValue(houseHand), houseCard2)
-		
+		fmt.Printf("The house has an %v (value of %v), and another card face down. %v\n", houseCard1, getHandValue([]Card{houseHand[0]}), houseHand[1])
+
 		playerTurn:
 			for {
 					if getHandValue(playerHand) > 21 {
@@ -161,8 +161,12 @@ func main() {
 
 				fmt.Printf("%v, %v\n", playerHand, getHandValue(playerHand))
 			}
-
-		fmt.Println("loop done")
+		
+		houseTurn:
+			for {
+				fmt.Printf("The house reveals their face down card to be a %v.\n", )
+				break houseTurn
+			}
 		// start house turn
 		//fmt.Printf("deck2%v", deck)
 		var gameInputtmp int
