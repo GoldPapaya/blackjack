@@ -131,23 +131,39 @@ func main() {
 
 		fmt.Printf("Your hand: %v, with a total value of %v.\n", playerHand, getHandValue(playerHand))
 		fmt.Printf("The house has an %v (value of %v), and another card face down. %v\n", houseCard1, getHandValue(houseHand), houseCard2)
-		for {
-				if getHandValue(playerHand) > 21 {
-					fmt.Println("Your hand went bust!")
-					break
-				}
-			fmt.Println("What will you do?")
-			fmt.Println("1 - Hit")
-			fmt.Println("2 - Hold")
-			fmt.Scan(&gameInput)
-			if gameInput == 2 {
-				break
-			}
-			playerHand = append(playerHand, drawCard(deck))
-			fmt.Printf("%v, %v\n", playerHand, getHandValue(playerHand))
-		}
 		
+		playerTurn:
+			for {
+					if getHandValue(playerHand) > 21 {
+						fmt.Println("Your hand went bust!")
+						break
+					}
+
+				fmt.Println("What will you do?")
+				fmt.Println("1 - Hit")
+				fmt.Println("2 - Hold")
+				fmt.Scan(&gameInput)
+				switch gameInput {
+				case 1:
+					// Hit
+					playerHand = append(playerHand, drawCard(deck))
+				case 2:
+					// Stand
+					break playerTurn
+				case 3:
+					// Split
+				case 4:
+					// Double down
+				case 5:
+					// Temp exit
+					break playerTurn
+				}
+
+				fmt.Printf("%v, %v\n", playerHand, getHandValue(playerHand))
+			}
+
 		fmt.Println("loop done")
+		// start house turn
 		//fmt.Printf("deck2%v", deck)
 		var gameInputtmp int
 		fmt.Scan(&gameInputtmp)
