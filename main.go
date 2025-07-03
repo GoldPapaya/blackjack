@@ -129,8 +129,8 @@ func main() {
 		houseHand = append(houseHand, houseCard1)
 
 
-		fmt.Printf("You have been dealt an %v and an %v, with a total value of %v.\n", playerCard1, playerCard2, getHandValue(playerHand))
-		fmt.Printf("The house has an %v (for a value of %v), and another card face down. %v\n", houseCard1, getHandValue(houseHand), houseCard2)
+		fmt.Printf("Your hand: %v, with a total value of %v.\n", playerHand, getHandValue(playerHand))
+		fmt.Printf("The house has an %v (value of %v), and another card face down. %v\n", houseCard1, getHandValue(houseHand), houseCard2)
 		for {
 				if getHandValue(playerHand) > 21 {
 					fmt.Println("Your hand went bust!")
@@ -144,8 +144,9 @@ func main() {
 				break
 			}
 			playerHand = append(playerHand, drawCard(deck))
-			fmt.Printf("%v, %v", playerHand, getHandValue(playerHand))
+			fmt.Printf("%v, %v\n", playerHand, getHandValue(playerHand))
 		}
+		
 		fmt.Println("loop done")
 		//fmt.Printf("deck2%v", deck)
 		var gameInputtmp int
