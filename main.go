@@ -119,29 +119,36 @@ func main() {
 	// game loop
 	for {
 		var gameInput int
-		//fmt.Printf("deck1%v\n", deck)
-		var playerCard1 = drawCard(deck)
-		var playerCard2 = drawCard(deck)
+		//TODO testing some stuff for split below
+		//var playerCard1 = drawCard(deck)
+		//var playerCard2 = drawCard(deck)
+
+		var playerCard1 = Card{face: "Ace", suit: "Spades"}
+		var playerCard2 = Card{face: "Ace", suit: "Diamonds"}
 		var houseCard1 = drawCard(deck)
 		var houseCard2 = drawCard(deck)
 
 		playerHand = append(playerHand, playerCard1, playerCard2)
 		houseHand = append(houseHand, houseCard1, houseCard2)
 
-
-		fmt.Printf("Your hand: %v, with a total value of %v.\n", playerHand, getHandValue(playerHand))
-		fmt.Printf("The house has an %v (value of %v), and another card face down.\n", houseCard1, getHandValue([]Card{houseHand[0]}))
+		var hasOptionToSplit bool = gameInput == 0 && playerCard1.face == playerCard2.face
 
 		playerTurn:
 		for {
-				if getHandValue(playerHand) > 21 {
-					fmt.Println("Your hand went bust!")
-					break
-				}
-
+			if getHandValue(playerHand) > 21 {
+				fmt.Println("Your hand went bust!")
+				break
+			}
+			fmt.Printf("Your hand: %v, with a total value of %v.\n", playerHand, getHandValue(playerHand))
+			fmt.Printf("The house has an %v (value of %v), and another card face down.\n", houseCard1, getHandValue([]Card{houseHand[0]}))
 			fmt.Println("What will you do?")
 			fmt.Println("1 - Hit")
-			fmt.Println("2 - Hold")
+			fmt.Println("2 - Stand")
+			fmt.Println("3 - Double Down")
+			if hasOptionToSplit {
+				fmt.Println("4 - Split")
+			}
+
 			fmt.Scan(&gameInput)
 			switch gameInput {
 			case 1:
@@ -151,12 +158,14 @@ func main() {
 				// Stand
 				break playerTurn
 			case 3:
-				// Split
-			case 4:
 				// Double down
-			case 5:
-				// Temp exit
-				break playerTurn
+			case 4:
+				if !hasOptionToSplit {
+					fmt.Println("Please enter a valid input.")
+				} else {
+					// Split
+					fmt.Println("test")
+				}
 			}
 
 			fmt.Printf("%v, %v\n", playerHand, getHandValue(playerHand))
