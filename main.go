@@ -102,6 +102,77 @@ func drawCard(deck []Card) Card {
 	return card
 }
 
+func playerTurn(deck []Card, playerHand []Card, houseHand []Card) int {
+	var gameInput int
+	for {
+		if getHandValue(playerHand) > 21 {
+			fmt.Println("Your hand went bust!")
+			break
+		}
+		fmt.Printf("Your hand: %v, with a total value of %v.\n", playerHand, getHandValue(playerHand))
+		fmt.Printf("The house has an %v (value of %v), and another card face down.\n", houseHand[0], getHandValue([]Card{houseHand[0]}))
+		fmt.Println("What will you do?")
+		fmt.Println("1 - Hit")
+		fmt.Println("2 - Stand")
+		fmt.Println("3 - Double Down")
+		if gameInput == 0 && playerHand[0].face == playerHand[1].face { // if player has option to split (assumes playercard1&2 exist)
+			fmt.Println("4 - Split")
+		}
+
+		fmt.Scan(&gameInput)
+		switch gameInput {
+		case 1:
+			// Hit
+			playerHand = append(playerHand, drawCard(deck))
+		case 2:
+			// Stand
+			fmt.Printf("The house reveals their face down card to be a %v.\n", houseHand[1])
+			houseTurn(deck, playerHand, houseHand, getHandValue(playerHand))
+			return 0
+		case 3:
+			// Double down
+		case 4:
+			if !(gameInput == 0 && playerHand[0].face == playerHand[1].face) { // if player does not have option to split (assumes playercard1&2 exist)
+				fmt.Println("Please enter a valid input.")
+			} else {
+				// Split
+				fmt.Println("test")
+			}
+		}
+
+		fmt.Printf("%v, %v\n", playerHand, getHandValue(playerHand))
+	}
+	return 0
+}
+
+func houseTurn(deck []Card, playerHand []Card, houseHand []Card, playerTotal int) {
+	for {
+		if getHandValue(houseHand) > 21 {
+			fmt.Println("The house has gone bust!")
+			break
+		}
+		fmt.Printf("The house hand is: %v, with a total value of %v.\n", houseHand, getHandValue(houseHand))
+		if getHandValue(houseHand) > getHandValue(playerHand) {
+			fmt.Println("House wins.")
+			break
+		}
+		if getHandValue(houseHand) >= 17 {
+			fmt.Println("The house stands because it cannot hit past 17.")
+			if getHandValue(playerHand) > getHandValue(houseHand) {
+				// Player wins
+				fmt.Println("Player wins.")
+				break
+			} else if getHandValue(playerHand) == getHandValue(houseHand) {
+				// Tie
+				fmt.Println("Tie.")
+				break
+			}
+		}
+		houseHand = append(houseHand, drawCard(deck))
+		fmt.Printf("The house draws another card. It is a %v.", houseHand[len(houseHand)-1])
+	}
+}
+
 func main() {
 	var username string
 
@@ -115,100 +186,20 @@ func main() {
 	playerHand := []Card{}
 	houseHand := []Card{}
 	deck = initDeck()
+	//TODO testing some stuff for split below
+	//var playerCard1 = drawCard(deck)
+	//var playerCard2 = drawCard(deck)
+	var playerCard1 = Card{face: "Ace", suit: "Spades"}
+	var playerCard2 = Card{face: "Ace", suit: "Diamonds"}
+	var houseCard1 = drawCard(deck)
+	var houseCard2 = drawCard(deck)
+
+	playerHand = append(playerHand, playerCard1, playerCard2)
+	houseHand = append(houseHand, houseCard1, houseCard2)
+
 	fmt.Println("A new round of Blackjack has started.")
-	// game loop
-	for {
-		var gameInput int
-		//TODO testing some stuff for split below
-		//var playerCard1 = drawCard(deck)
-		//var playerCard2 = drawCard(deck)
-
-		var playerCard1 = Card{face: "Ace", suit: "Spades"}
-		var playerCard2 = Card{face: "Ace", suit: "Diamonds"}
-		var houseCard1 = drawCard(deck)
-		var houseCard2 = drawCard(deck)
-
-		playerHand = append(playerHand, playerCard1, playerCard2)
-		houseHand = append(houseHand, houseCard1, houseCard2)
-
-		var hasOptionToSplit bool = gameInput == 0 && playerCard1.face == playerCard2.face
-
-		playerTurn:
-		for {
-			if getHandValue(playerHand) > 21 {
-				fmt.Println("Your hand went bust!")
-				break
-			}
-			fmt.Printf("Your hand: %v, with a total value of %v.\n", playerHand, getHandValue(playerHand))
-			fmt.Printf("The house has an %v (value of %v), and another card face down.\n", houseCard1, getHandValue([]Card{houseHand[0]}))
-			fmt.Println("What will you do?")
-			fmt.Println("1 - Hit")
-			fmt.Println("2 - Stand")
-			fmt.Println("3 - Double Down")
-			if hasOptionToSplit {
-				fmt.Println("4 - Split")
-			}
-
-			fmt.Scan(&gameInput)
-			switch gameInput {
-			case 1:
-				// Hit
-				playerHand = append(playerHand, drawCard(deck))
-			case 2:
-				// Stand
-				break playerTurn
-			case 3:
-				// Double down
-			case 4:
-				if !hasOptionToSplit {
-					fmt.Println("Please enter a valid input.")
-				} else {
-					// Split
-					fmt.Println("test")
-				}
-			}
-
-			fmt.Printf("%v, %v\n", playerHand, getHandValue(playerHand))
-		}
-		
-		fmt.Printf("The house reveals their face down card to be a %v.\n", houseHand[1])
-		houseTurn:
-		for {
-			if getHandValue(houseHand) > 21 {
-				fmt.Println("The house has gone bust!")
-				break
-			}
-			fmt.Printf("The house hand is: %v, with a total value of %v.\n", houseHand, getHandValue(houseHand))
-			if getHandValue(houseHand) >= 17 {
-				fmt.Printf("The house stands.")
-				if getHandValue(playerHand) > getHandValue(houseHand) {
-					// Player wins
-					fmt.Println("Player wins")
-					break houseTurn
-				} else if getHandValue(playerHand) == getHandValue(houseHand) {
-					// Tie
-					fmt.Println("Tie")
-					break houseTurn
-				} else {
-					// House wins
-					fmt.Println("House wins")
-					break houseTurn
-				}
-			}
-			houseHand = append(houseHand, drawCard(deck))
-			fmt.Printf("The house draws another card. It is a %v.", houseHand[len(houseHand)-1])
-		}
-		// start house turn
-		//fmt.Printf("deck2%v", deck)
-		var gameInputtmp int
-		fmt.Scan(&gameInputtmp)
-		if gameInputtmp == 2 {
-			break
-		} else if gameInputtmp == 1 {
-			continue
-		}
-
-	}
+	
+	playerTurn(deck, playerHand, houseHand)
 }
 
 func startScreen() {
