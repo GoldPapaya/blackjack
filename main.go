@@ -132,8 +132,9 @@ func playerTurn(deck []Card, playerHand []Card, houseHand []Card) int {
 		case 3:
 			// Double down
 		case 4:
-			if !(gameInput == 0 && playerHand[0].face == playerHand[1].face) { // if player does not have option to split (assumes playercard1&2 exist)
+			if !(playerHand[0].face == playerHand[1].face) {
 				fmt.Println("Please enter a valid input.")
+				fmt.Printf("%v, %v, %v\n", gameInput, playerHand[0].face, playerHand[1].face)
 			} else {
 				// Split
 				fmt.Println("test")
