@@ -115,7 +115,7 @@ func playerTurn(deck []Card, playerHand []Card, houseHand []Card) int {
 		fmt.Println("1 - Hit")
 		fmt.Println("2 - Stand")
 		fmt.Println("3 - Double Down")
-		if gameInput == 0 && playerHand[0].face == playerHand[1].face { // if player has option to split (assumes playercard1&2 exist)
+		if len(playerHand) > 1 && gameInput == 0 && playerHand[0].face == playerHand[1].face { // if player has option to split (assumes playercard1&2 exist)
 			fmt.Println("4 - Split")
 		}
 
@@ -138,6 +138,9 @@ func playerTurn(deck []Card, playerHand []Card, houseHand []Card) int {
 			} else {
 				// Split
 				fmt.Println("test")
+				playerTurn(deck, []Card{playerHand[0]}, houseHand)
+				playerTurn(deck, []Card{playerHand[1]}, houseHand)
+				return 0
 			}
 		}
 
