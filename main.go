@@ -108,6 +108,7 @@ func drawCard(deck []Card) Card {
 func playerTurn(deck []Card, playerHand []Card, houseHand []Card) int {
 	var gameInput int
 	for {
+		clearCLI()
 		if getHandValue(playerHand) > 21 {
 			fmt.Println("Your hand went bust!")
 			break
@@ -133,6 +134,7 @@ func playerTurn(deck []Card, playerHand []Card, houseHand []Card) int {
 			playerHand = append(playerHand, drawCard(deck))
 		case 2:
 			// Stand
+			clearCLI()
 			fmt.Printf("The house reveals their face down card to be a %v.\n", houseHand[1])
 			houseTurn(deck, playerHand, houseHand, getHandValue(playerHand))
 			return 0
@@ -179,7 +181,7 @@ func houseTurn(deck []Card, playerHand []Card, houseHand []Card, playerTotal int
 			}
 		}
 		houseHand = append(houseHand, drawCard(deck))
-		fmt.Printf("The house draws another card. It is a %v.", houseHand[len(houseHand)-1])
+		fmt.Printf("The house draws another card. It is a %v.\n", houseHand[len(houseHand)-1])
 	}
 }
 
@@ -206,6 +208,7 @@ func main() {
 
 	fmt.Printf("Welcome %v. Please input a number according to the options below:\n", username)
 	startScreen()
+	clearCLI()
 
 	playerHand := []Card{}
 	houseHand := []Card{}
@@ -220,8 +223,6 @@ func main() {
 
 	playerHand = append(playerHand, playerCard1, playerCard2)
 	houseHand = append(houseHand, houseCard1, houseCard2)
-
-	fmt.Println("A new round of Blackjack has started.")
 	
 	playerTurn(deck, playerHand, houseHand)
 }
@@ -252,6 +253,7 @@ func startScreen() {
 
 func rulesScreen() {
 	var menuScreenInput int
+	clearCLI()
 
 	fmt.Println("******************** RULES ********************")
 	fmt.Println("In Blackjack, you play against a dealer.")
@@ -274,9 +276,11 @@ func rulesScreen() {
 }
 
 func balanceScreen() {
+	clearCLI()
 	// balance
 }
 
 func ledgerScreen() {
+	clearCLI()
 	// ledger
 }
