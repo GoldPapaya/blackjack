@@ -109,13 +109,17 @@ func playerTurn(deck []Card, playerHand []Card, houseHand []Card) int {
 			fmt.Println("Your hand went bust!")
 			break
 		}
+		if len(playerHand) == 1 {
+			playerHand = append(playerHand, drawCard(deck))
+			fmt.Printf("Your split hand is dealt a %v.\n", playerHand[1])
+		}
 		fmt.Printf("Your hand: %v, with a total value of %v.\n", playerHand, getHandValue(playerHand))
 		fmt.Printf("The house has an %v (value of %v), and another card face down.\n", houseHand[0], getHandValue([]Card{houseHand[0]}))
 		fmt.Println("What will you do?")
 		fmt.Println("1 - Hit")
 		fmt.Println("2 - Stand")
 		fmt.Println("3 - Double Down")
-		if len(playerHand) > 1 && gameInput == 0 && playerHand[0].face == playerHand[1].face { // if player has option to split (assumes playercard1&2 exist)
+		if len(playerHand) > 1 && playerHand[0].face == playerHand[1].face { // if player has option to split (assumes playercard1&2 exist)
 			fmt.Println("4 - Split")
 		}
 
@@ -218,18 +222,14 @@ func startScreen() {
 	switch startScreenInput {
 	case 1:
 		// play
-		fmt.Println("option 1")
 	case 2:
 		// rules
-		fmt.Println("option 2")
 		rulesScreen()
 	case 3:
 		// balance
-		fmt.Println("option 3")
 		balanceScreen()
 	case 4:
 		// ledger
-		fmt.Println("option 4")
 		ledgerScreen()
 	}
 }
