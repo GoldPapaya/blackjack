@@ -3,6 +3,9 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"os"
+	"os/exec"
+	"runtime"
 )
 
 // Card object
@@ -141,7 +144,6 @@ func playerTurn(deck []Card, playerHand []Card, houseHand []Card) int {
 				fmt.Printf("%v, %v, %v\n", gameInput, playerHand[0].face, playerHand[1].face)
 			} else {
 				// Split
-				fmt.Println("test")
 				playerTurn(deck, []Card{playerHand[0]}, houseHand)
 				playerTurn(deck, []Card{playerHand[1]}, houseHand)
 				return 0
@@ -181,12 +183,26 @@ func houseTurn(deck []Card, playerHand []Card, houseHand []Card, playerTotal int
 	}
 }
 
+// For clearing CLI output only
+func clearCLI() {
+	if runtime.GOOS == "windows" {
+		cmd := exec.Command("cmd", "/c", "cls")
+		cmd.Stdout = os.Stdout
+		cmd.Run()
+	} else {
+		cmd := exec.Command("clear")
+		cmd.Stdout = os.Stdout
+		cmd.Run()
+	}
+}
+
 func main() {
 	var username string
 
 	fmt.Println("Welcome to the Blackjack Casino! Please enter your name.")
 	fmt.Scan(&username)
 	// validate username
+	clearCLI()
 
 	fmt.Printf("Welcome %v. Please input a number according to the options below:\n", username)
 	startScreen()
