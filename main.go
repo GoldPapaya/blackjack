@@ -105,6 +105,18 @@ func drawCard(deck []Card) Card {
 	return card
 }
 
+var balance int = 1000
+func placeBet() {
+	var betScreenInput int
+	var bet int
+	fmt.Println("Place a bet amount")
+	fmt.Scan(&bet)
+	balance -= bet
+	fmt.Printf("Your bet has been placed. Your new balance is $%v.\n", balance)
+	fmt.Println("Enter 1 to continue...")
+	fmt.Scan(&betScreenInput)
+}
+
 func playerTurn(deck []Card, playerHand []Card, houseHand []Card) int {
 	var gameInput int
 	for {
@@ -136,7 +148,7 @@ func playerTurn(deck []Card, playerHand []Card, houseHand []Card) int {
 			// Stand
 			clearCLI()
 			fmt.Printf("The house reveals their face down card to be a %v.\n", houseHand[1])
-			houseTurn(deck, playerHand, houseHand, getHandValue(playerHand))
+			houseTurn(deck, playerHand, houseHand)
 			return 0
 		case 3:
 			// Double down
@@ -151,19 +163,20 @@ func playerTurn(deck []Card, playerHand []Card, houseHand []Card) int {
 				return 0
 			}
 		}
-
-		fmt.Printf("%v, %v\n", playerHand, getHandValue(playerHand))
+		//clearCLI()
+		//fmt.Printf("%v, %v\n", playerHand, getHandValue(playerHand))
 	}
 	return 0
 }
 
-func houseTurn(deck []Card, playerHand []Card, houseHand []Card, playerTotal int) {
+func houseTurn(deck []Card, playerHand []Card, houseHand []Card) {
+	var houseScreenInput int
 	for {
+		fmt.Printf("The house hand is: %v, with a total value of %v.\n", houseHand, getHandValue(houseHand))
 		if getHandValue(houseHand) > 21 {
 			fmt.Println("The house has gone bust!")
 			break
 		}
-		fmt.Printf("The house hand is: %v, with a total value of %v.\n", houseHand, getHandValue(houseHand))
 		if getHandValue(houseHand) > getHandValue(playerHand) {
 			fmt.Println("House wins.")
 			break
@@ -180,6 +193,8 @@ func houseTurn(deck []Card, playerHand []Card, houseHand []Card, playerTotal int
 				break
 			}
 		}
+		fmt.Println("Enter 1 to continue...")
+		fmt.Scan(&houseScreenInput)
 		houseHand = append(houseHand, drawCard(deck))
 		fmt.Printf("The house draws another card. It is a %v.\n", houseHand[len(houseHand)-1])
 	}
@@ -191,7 +206,7 @@ func clearCLI() {
 		cmd := exec.Command("cmd", "/c", "cls")
 		cmd.Stdout = os.Stdout
 		cmd.Run()
-	} else {
+	} else { // this might be problematic for a non-windows os
 		cmd := exec.Command("clear")
 		cmd.Stdout = os.Stdout
 		cmd.Run()
@@ -210,20 +225,15 @@ func main() {
 	startScreen()
 	clearCLI()
 
+
+
 	playerHand := []Card{}
 	houseHand := []Card{}
 	deck = initDeck()
-	//TODO testing some stuff for split below
-	//var playerCard1 = drawCard(deck)
-	//var playerCard2 = drawCard(deck)
-	var playerCard1 = Card{face: "Ace", suit: "Spades"}
-	var playerCard2 = Card{face: "Ace", suit: "Diamonds"}
-	var houseCard1 = drawCard(deck)
-	var houseCard2 = drawCard(deck)
-
-	playerHand = append(playerHand, playerCard1, playerCard2)
-	houseHand = append(houseHand, houseCard1, houseCard2)
+	playerHand = append(playerHand, drawCard(deck), drawCard(deck))
+	houseHand = append(houseHand, drawCard(deck), drawCard(deck))
 	
+	placeBet()
 	playerTurn(deck, playerHand, houseHand)
 }
 
