@@ -15,6 +15,7 @@ func playerTurn(deck []Card, playerHand []Card, houseHand []Card) int {
 	for {
 		clearCLI()
 		if getHandValue(playerHand) > 21 {
+			fmt.Printf("You drew a %v, increasing your hand value to %v.\n", playerHand[len(playerHand)-1], getHandValue(playerHand))
 			fmt.Println("Your hand went bust!")
 			break
 		}
@@ -107,6 +108,7 @@ func clearCLI() {
 }
 
 func main() {
+	var mainScreenInput int
 	var username string
 
 	fmt.Println("Welcome to the Blackjack Casino! Please enter your name.")
@@ -116,18 +118,20 @@ func main() {
 
 	fmt.Printf("Welcome %v. Please input a number according to the options below:\n", username)
 	startScreen()
-	clearCLI()
 
-
-
-	playerHand := []Card{}
-	houseHand := []Card{}
-	deck = initDeck()
-	playerHand = append(playerHand, drawCard(deck), drawCard(deck))
-	houseHand = append(houseHand, drawCard(deck), drawCard(deck))
-	
-	placeBet()
-	playerTurn(deck, playerHand, houseHand)
+	for {
+		clearCLI()
+		playerHand := []Card{}
+		houseHand := []Card{}
+		deck = initDeck()
+		playerHand = append(playerHand, drawCard(deck), drawCard(deck))
+		houseHand = append(houseHand, drawCard(deck), drawCard(deck))
+		
+		placeBet()
+		playerTurn(deck, playerHand, houseHand)
+		fmt.Println("Enter 1 to continue...")
+		fmt.Scan(&mainScreenInput)
+	}
 }
 
 func startScreen() {
