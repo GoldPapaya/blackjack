@@ -10,13 +10,14 @@ import (
 var deck []Card
 var balance int = 1000
 
-func playerTurn(deck []Card, playerHand []Card, houseHand []Card) int {
+func playerTurn(deck []Card, playerHand []Card, houseHand []Card, bet int) int {
 	var gameInput int
 	for {
 		clearCLI()
 		if getHandValue(playerHand) > 21 {
 			fmt.Printf("You drew a %v, increasing your hand value to %v.\n", playerHand[len(playerHand)-1], getHandValue(playerHand))
 			fmt.Println("Your hand went bust!")
+			adjustBalance(2, bet)
 			break
 		}
 		if len(playerHand) == 1 {
@@ -42,18 +43,19 @@ func playerTurn(deck []Card, playerHand []Card, houseHand []Card) int {
 			// Stand
 			clearCLI()
 			fmt.Printf("The house reveals their face down card to be a %v.\n", houseHand[1])
-			houseTurn(deck, playerHand, houseHand)
+			houseTurn(deck, playerHand, houseHand, bet)
 			return 0
 		case 3:
 			// Double down
+			bet *= 2
 		case 4:
 			if !(playerHand[0].face == playerHand[1].face) {
 				fmt.Println("Please enter a valid input.")
 				fmt.Printf("%v, %v, %v\n", gameInput, playerHand[0].face, playerHand[1].face)
 			} else {
 				// Split
-				playerTurn(deck, []Card{playerHand[0]}, houseHand)
-				playerTurn(deck, []Card{playerHand[1]}, houseHand)
+				playerTurn(deck, []Card{playerHand[0]}, houseHand, bet)
+				playerTurn(deck, []Card{playerHand[1]}, houseHand, bet)
 				return 0
 			}
 		}
@@ -63,16 +65,18 @@ func playerTurn(deck []Card, playerHand []Card, houseHand []Card) int {
 	return 0
 }
 
-func houseTurn(deck []Card, playerHand []Card, houseHand []Card) {
+func houseTurn(deck []Card, playerHand []Card, houseHand []Card, bet int) {
 	var houseScreenInput int
 	for {
 		fmt.Printf("The house hand is: %v, with a total value of %v.\n", houseHand, getHandValue(houseHand))
 		if getHandValue(houseHand) > 21 {
 			fmt.Println("The house has gone bust!")
+			adjustBalance(1, bet)
 			break
 		}
 		if getHandValue(houseHand) > getHandValue(playerHand) {
 			fmt.Println("House wins.")
+			adjustBalance(2, bet)
 			break
 		}
 		if getHandValue(houseHand) >= 17 {
@@ -80,10 +84,12 @@ func houseTurn(deck []Card, playerHand []Card, houseHand []Card) {
 			if getHandValue(playerHand) > getHandValue(houseHand) {
 				// Player wins
 				fmt.Println("Player wins.")
+				adjustBalance(1, bet)
 				break
 			} else if getHandValue(playerHand) == getHandValue(houseHand) {
 				// Tie
 				fmt.Println("Tie.")
+				adjustBalance(3, bet)
 				break
 			}
 		}
@@ -127,8 +133,8 @@ func main() {
 		playerHand = append(playerHand, drawCard(deck), drawCard(deck))
 		houseHand = append(houseHand, drawCard(deck), drawCard(deck))
 		
-		placeBet()
-		playerTurn(deck, playerHand, houseHand)
+		var bet int = placeBet()
+		playerTurn(deck, playerHand, houseHand, bet)
 		fmt.Println("Enter 1 to continue...")
 		fmt.Scan(&mainScreenInput)
 	}

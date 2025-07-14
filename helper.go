@@ -91,7 +91,7 @@ func getHandValue(hand []Card) int {
 	return total
 }
 
-func placeBet() {
+func placeBet() int {
 	var betScreenInput int
 	var bet int
 	fmt.Println("Place a bet amount")
@@ -100,6 +100,18 @@ func placeBet() {
 	fmt.Printf("Your bet has been placed. Your new balance is $%v.\n", balance)
 	fmt.Println("Enter 1 to continue...")
 	fmt.Scan(&betScreenInput)
+	return bet
+}
+
+func adjustBalance(state int, bet int) {
+	switch state {
+	case 1:
+		// x
+	case 2:
+		// y
+	case 3:
+		// z
+	}
 }
 
 func drawCard(deck []Card) Card {
