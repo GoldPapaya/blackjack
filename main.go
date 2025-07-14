@@ -29,7 +29,7 @@ func playerTurn(deck []Card, playerHand []Card, houseHand []Card) int {
 		fmt.Println("1 - Hit")
 		fmt.Println("2 - Stand")
 		fmt.Println("3 - Double Down")
-		if len(playerHand) > 1 && playerHand[0].face == playerHand[1].face { // if player has option to split (assumes playercard1&2 exist)
+		if len(playerHand) == 2 && playerHand[0].face == playerHand[1].face { // if player has option to split (assumes playercard1&2 exist)
 			fmt.Println("4 - Split")
 		}
 
