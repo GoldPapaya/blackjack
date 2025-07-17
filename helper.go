@@ -94,7 +94,8 @@ func getHandValue(hand []Card) int {
 func placeBet() int {
 	var betScreenInput int
 	var bet int
-	fmt.Println("Place a bet amount")
+	fmt.Printf("Your current balance is $%v.\n", balance)
+	fmt.Println("Enter the amount of your bet:")
 	fmt.Scan(&bet)
 	fmt.Printf("Your bet of %v has been placed.\n", bet)
 	fmt.Println("Enter 1 to continue...")
