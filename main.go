@@ -141,24 +141,25 @@ func main() {
 func startScreen() {
 	var startScreenInput uint
 
-	fmt.Println("1 - Play")
-	fmt.Println("2 - Rules")
-	fmt.Println("3 - Balance")
-	fmt.Println("4 - Ledger")
+	fmt.Println("1 - Rules")
+	fmt.Println("2 - Balance")
+	fmt.Println("3 - Ledger")
+	fmt.Println("4 - Play")
 	fmt.Scan(&startScreenInput)
-
+	fmt.Printf("%v", startScreenInput)
 	switch startScreenInput {
 	case 1:
 		// play
+		rulesScreen()
 	case 2:
 		// rules
-		rulesScreen()
+		balanceScreen()
 	case 3:
 		// balance
-		balanceScreen()
+		ledgerScreen()
 	case 4:
 		// ledger
-		ledgerScreen()
+		break
 	}
 }
 
@@ -187,8 +188,22 @@ func rulesScreen() {
 }
 
 func balanceScreen() {
-	clearCLI()
-	// balance
+	var balanceScreenInput int
+	var addedFundsAmount int
+	for balanceScreenInput != 2	{
+		//clearCLI()
+		// balance
+		fmt.Printf("You have a current balance of $%v.\n", balance)
+		fmt.Println("1 - Add to balance")
+		fmt.Println("2 - Exit to menu")
+		fmt.Scan(&balanceScreenInput)
+		if balanceScreenInput == 1 {
+			fmt.Println("Enter an amount to add to your balance:")
+			fmt.Scan(&addedFundsAmount)
+			balance += addedFundsAmount
+		}
+	}
+	startScreen()
 }
 
 func ledgerScreen() {
