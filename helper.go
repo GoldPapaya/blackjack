@@ -100,7 +100,7 @@ func placeBet() int {
 	fmt.Printf("Your current balance is $%v.\n", balance)
 	fmt.Println("Enter the amount of your bet:")
 	fmt.Scan(&bet)
-	fmt.Printf("Your bet of %v has been placed.\n", bet)
+	fmt.Printf("Your bet of $%v has been placed.\n", bet)
 	fmt.Println("Enter 1 to continue...")
 	fmt.Scan(&betScreenInput)
 	return bet
@@ -112,10 +112,10 @@ func adjustBalance(state int, bet int) {
 	switch state {
 	case 1:
 		balance += bet
-		fmt.Printf("You won %v!\n", bet)
+		fmt.Printf("You won $%v!\n", bet)
 	case 2:
 		balance -= bet
-		fmt.Printf("You lost %v!\n", bet)
+		fmt.Printf("You lost $%v!\n", bet)
 	case 3:
 		fmt.Println("You tied!")
 	}
