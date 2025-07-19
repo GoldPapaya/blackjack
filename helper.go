@@ -3,6 +3,9 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"os"
+	"os/exec"
+	"runtime"
 )
 
 // Card object
@@ -126,4 +129,17 @@ func drawCard(deck []Card) Card {
 	card := deck[index]
 	deck = append(deck[:index], deck[index+1:]...)
 	return card
+}
+
+// For clearing CLI output only
+func clearCLI() {
+	if runtime.GOOS == "windows" {
+		cmd := exec.Command("cmd", "/c", "cls")
+		cmd.Stdout = os.Stdout
+		cmd.Run()
+	} else { // this might be problematic for a non-windows os
+		cmd := exec.Command("clear")
+		cmd.Stdout = os.Stdout
+		cmd.Run()
+	}
 }

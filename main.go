@@ -2,9 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"os/exec"
-	"runtime"
 )
 
 var deck []Card
@@ -108,19 +105,6 @@ func houseTurn(deck []Card, playerHand []Card, houseHand []Card, bet int) {
 		houseHand = append(houseHand, drawCard(deck))
 		clearCLI()
 		fmt.Printf("The house draws another card. It is a %v.\n", houseHand[len(houseHand)-1])
-	}
-}
-
-// For clearing CLI output only
-func clearCLI() {
-	if runtime.GOOS == "windows" {
-		cmd := exec.Command("cmd", "/c", "cls")
-		cmd.Stdout = os.Stdout
-		cmd.Run()
-	} else { // this might be problematic for a non-windows os
-		cmd := exec.Command("clear")
-		cmd.Stdout = os.Stdout
-		cmd.Run()
 	}
 }
 
