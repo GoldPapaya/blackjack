@@ -186,6 +186,7 @@ func rulesScreen() {
 	fmt.Println("2 - Exit to menu")
 	fmt.Println("***********************************************")
 	fmt.Scan(&menuScreenInput)
+	clearCLI()
 
 	if menuScreenInput == 1 {
 		// play
@@ -198,7 +199,7 @@ func balanceScreen() {
 	var balanceScreenInput int
 	var addedFundsAmount int
 	for balanceScreenInput != 2	{
-		//clearCLI()
+		clearCLI()
 		// balance
 		fmt.Printf("You have a current balance of $%v.\n", balance)
 		fmt.Println("1 - Add to balance")
@@ -210,6 +211,7 @@ func balanceScreen() {
 			balance += addedFundsAmount
 		}
 	}
+	clearCLI()
 	startScreen()
 }
 
