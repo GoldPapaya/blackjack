@@ -18,6 +18,13 @@ func playerTurn(deck []Card, playerHand []Card, houseHand []Card, bet int) int {
 			fmt.Scan(&gameInput)
 			adjustBalance(2, bet)
 			break
+		} else if getHandValue(playerHand) == 21 {
+			clearCLI()
+			fmt.Printf("You were dealt a %v.\n", playerHand[len(playerHand)-1])
+			fmt.Println("Since your hand has a value of 21, you stand.")
+			fmt.Printf("The house reveals their face down card to be a %v.\n", houseHand[1])
+			houseTurn(deck, playerHand, houseHand, bet)
+			return 0
 		}
 		if len(playerHand) == 1 {
 			playerHand = append(playerHand, drawCard(deck))
