@@ -149,25 +149,25 @@ func main() {
 func startScreen() {
 	var startScreenInput uint
 
-	fmt.Println("1 - Rules")
-	fmt.Println("2 - Balance")
-	fmt.Println("3 - Ledger")
-	fmt.Println("4 - Play")
+	fmt.Println("1 - Play")
+	fmt.Println("2 - Rules")
+	fmt.Println("3 - Balance")
+	fmt.Println("4 - Ledger")
 	fmt.Scan(&startScreenInput)
 	fmt.Printf("%v", startScreenInput)
 	switch startScreenInput {
 	case 1:
 		// play
-		rulesScreen()
+		break
 	case 2:
 		// rules
-		balanceScreen()
+		rulesScreen()
 	case 3:
 		// balance
-		ledgerScreen()
+		balanceScreen()
 	case 4:
 		// ledger
-		break
+		ledgerScreen()
 	}
 }
 
