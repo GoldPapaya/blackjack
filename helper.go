@@ -120,7 +120,7 @@ func adjustBalance(state int, bet int) {
 		fmt.Println("You tied!")
 	}
 	fmt.Printf("Your balance is now $%v.\n", balance)
-	fmt.Println("Press 1 to continue...")
+	fmt.Println("Enter 1 to continue...")
 	fmt.Scan(&adjustBalanceScreenInput)
 }
 
