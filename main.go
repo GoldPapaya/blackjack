@@ -127,7 +127,7 @@ func main() {
 	fmt.Printf("Welcome %v. Please input a number according to the options below:\n", username)
 	startScreen()
 
-	for {
+	for mainScreenInput != 2 {
 		clearCLI()
 		playerHand := []Card{}
 		houseHand := []Card{}
@@ -143,6 +143,7 @@ func main() {
 		fmt.Println("Enter 1 to continue...") // include option to stop playing
 		fmt.Scan(&mainScreenInput)
 	}
+	fmt.Println("Stop")
 }
 
 func startScreen() {
