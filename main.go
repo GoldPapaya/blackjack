@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
 var deck []Card
@@ -130,7 +131,7 @@ func main() {
 	fmt.Printf("Welcome %v. Please input a number according to the options below:\n", username)
 	startScreen()
 
-	for mainScreenInput != 2 {
+	for mainScreenInput != 3 {
 		clearCLI()
 		playerHand := []Card{}
 		houseHand := []Card{}
@@ -143,8 +144,14 @@ func main() {
 		clearCLI()
 		// temp below
 		fmt.Println("Thanks for playing.")
-		fmt.Println("Enter 1 to continue...") // include option to stop playing
+		fmt.Println("1 - Play another round")
+		fmt.Println("2 - Exit to menu")
 		fmt.Scan(&mainScreenInput)
+		if mainScreenInput == 1 {
+			continue
+		} else if mainScreenInput == 2 {
+			startScreen()
+		}
 	}
 	fmt.Println("Stop")
 	ledgerScreen()
@@ -157,6 +164,7 @@ func startScreen() {
 	fmt.Println("2 - Rules")
 	fmt.Println("3 - Balance")
 	fmt.Println("4 - Ledger")
+	fmt.Println("5 - Quit game")
 	fmt.Scan(&startScreenInput)
 	fmt.Printf("%v", startScreenInput)
 	switch startScreenInput {
@@ -172,6 +180,9 @@ func startScreen() {
 	case 4:
 		// ledger
 		ledgerScreen()
+	case 5:
+		// exit game
+		os.Exit(0)
 	}
 }
 
