@@ -6,6 +6,7 @@ import (
 
 var deck []Card
 var balance int = 1000
+var ledger []int
 
 func playerTurn(deck []Card, playerHand []Card, houseHand []Card, bet int) int {
 	var gameInput int
@@ -90,7 +91,9 @@ func houseTurn(deck []Card, playerHand []Card, houseHand []Card, bet int) {
 			break
 		}
 		if getHandValue(houseHand) >= 17 {
-			fmt.Println("The house stands because it cannot hit past 17.")
+			if getHandValue(houseHand) != 21 {
+				fmt.Println("The house stands because it cannot hit past 17.")
+			}
 			if getHandValue(playerHand) > getHandValue(houseHand) {
 				// Player wins
 				fmt.Println("Player wins.")
@@ -144,6 +147,7 @@ func main() {
 		fmt.Scan(&mainScreenInput)
 	}
 	fmt.Println("Stop")
+	ledgerScreen()
 }
 
 func startScreen() {
@@ -217,6 +221,10 @@ func balanceScreen() {
 }
 
 func ledgerScreen() {
+	var ledgerScreenInput int
 	clearCLI()
+	fmt.Println(ledger)
+	fmt.Println("Enter 1 to continue...")
+	fmt.Scan(&ledgerScreenInput)
 	// ledger
 }

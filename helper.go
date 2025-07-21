@@ -112,11 +112,14 @@ func adjustBalance(state int, bet int) {
 	switch state {
 	case 1:
 		balance += bet
+		ledger = append(ledger, bet)
 		fmt.Printf("You won $%v!\n", bet)
 	case 2:
 		balance -= bet
+		ledger = append(ledger, -bet)
 		fmt.Printf("You lost $%v!\n", bet)
 	case 3:
+		ledger = append(ledger, 0)
 		fmt.Println("You tied!")
 	}
 	fmt.Printf("Your balance is now $%v.\n", balance)
