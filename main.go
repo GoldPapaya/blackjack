@@ -237,5 +237,7 @@ func ledgerScreen() {
 	fmt.Println(ledger)
 	fmt.Println("Enter 1 to continue...")
 	fmt.Scan(&ledgerScreenInput)
+	clearCLI()
+	startScreen()
 	// ledger
 }
