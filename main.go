@@ -168,20 +168,13 @@ func startScreen() {
 	fmt.Scan(&startScreenInput)
 	fmt.Printf("%v", startScreenInput)
 	switch startScreenInput {
-	case 1:
-		// play
-		break
 	case 2:
-		// rules
 		rulesScreen()
 	case 3:
-		// balance
 		balanceScreen()
 	case 4:
-		// ledger
 		ledgerScreen()
 	case 5:
-		// exit game
 		os.Exit(0)
 	}
 }
