@@ -150,6 +150,7 @@ func main() {
 		if mainScreenInput == 1 {
 			continue
 		} else if mainScreenInput == 2 {
+			clearCLI()
 			startScreen()
 		}
 	}
@@ -159,7 +160,6 @@ func main() {
 
 func startScreen() {
 	var startScreenInput uint
-
 	fmt.Println("1 - Play")
 	fmt.Println("2 - Rules")
 	fmt.Println("3 - Balance")
@@ -234,6 +234,7 @@ func balanceScreen() {
 func ledgerScreen() {
 	var ledgerScreenInput int
 	clearCLI()
+	fmt.Println("The following is an ordered log of placed bets:")
 	fmt.Println(ledger)
 	fmt.Println("Enter 1 to continue...")
 	fmt.Scan(&ledgerScreenInput)
