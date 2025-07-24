@@ -67,8 +67,6 @@ func playerTurn(deck []Card, playerHand []Card, houseHand []Card, bet int) int {
 				return 0
 			}
 		}
-		//clearCLI()
-		//fmt.Printf("%v, %v\n", playerHand, getHandValue(playerHand))
 	}
 	return 0
 }
@@ -142,7 +140,6 @@ func main() {
 		var bet int = placeBet()
 		playerTurn(deck, playerHand, houseHand, bet)
 		clearCLI()
-		// temp below
 		fmt.Println("Thanks for playing.")
 		fmt.Println("1 - Play another round")
 		fmt.Println("2 - Exit to menu")
@@ -166,7 +163,6 @@ func startScreen() {
 	fmt.Println("4 - Ledger")
 	fmt.Println("5 - Quit game")
 	fmt.Scan(&startScreenInput)
-	fmt.Printf("%v", startScreenInput)
 	switch startScreenInput {
 	case 2:
 		rulesScreen()
